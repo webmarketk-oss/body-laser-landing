@@ -1,10 +1,21 @@
 import type { Metadata } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "Body Laser - Consultation laser medicale",
+  title: "Body Laser - Consultation laser offerte",
   description:
-    "Landing Body Laser pour consultation epilation laser medicale Alexandrite + Nd:YAG.",
+    "Epilation laser medicale Alexandrite + Nd:YAG. Verifiez votre eligibilite a une consultation offerte.",
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",
@@ -18,7 +29,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
-      <body>{children}</body>
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+      >
+        {children}
+      </body>
     </html>
   );
 }

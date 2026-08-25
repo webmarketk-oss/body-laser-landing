@@ -1,19 +1,21 @@
-# Body Laser Landing
+# Body Laser — Consultation offerte
 
-Landing page Next.js prete pour Vercel.
+Landing Meta Ads separee de Depil Tech. Ne pas deployer sur le meme projet / les memes URLs.
 
-Variables optionnelles dans Vercel :
+Tunnel :
 
-- `NEXT_PUBLIC_LEAD_WEBHOOK_URL` : URL Make du webhook pour recevoir les leads.
-- `NEXT_PUBLIC_META_PIXEL_ID` : ID du pixel Meta.
+1. Accueil avec avant/apres
+2. Zones a cocher
+3. Coordonnees pour la consultation offerte
+4. Page merci
 
-Variantes possibles si besoin :
+Variables Vercel optionnelles :
 
-- `NEXT_PUBLIC_LEAD_WEBHOOK_URL_BODY_LASER`
-- `NEXT_PUBLIC_META_PIXEL_ID_BODY_LASER`
-
-Commande locale :
+- `NEXT_PUBLIC_META_PIXEL_ID`
+- `NEXT_PUBLIC_LEAD_WEBHOOK_URL`
+- `NEXT_PUBLIC_CENTER_NAME`
 
 ```bash
+npm install
 npm run dev
 ```
