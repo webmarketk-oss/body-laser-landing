@@ -138,6 +138,7 @@ function FloatingVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [visible, setVisible] = useState(false);
   const [paused, setPaused] = useState(false);
+  const [muted, setMuted] = useState(false);
 
   useEffect(() => {
     if (sessionStorage.getItem("bl-video-closed") === "1") return;
@@ -147,7 +148,15 @@ function FloatingVideo() {
 
   useEffect(() => {
     if (!visible) return;
-    videoRef.current?.play().catch(() => setPaused(true));
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = false;
+    video.volume = 1;
+    video.play().catch(() => {
+      video.muted = true;
+      setMuted(true);
+      video.play().catch(() => setPaused(true));
+    });
   }, [visible]);
 
   if (!visible) return null;
@@ -164,6 +173,18 @@ function FloatingVideo() {
     }
   }
 
+  function toggleSound() {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = !video.muted;
+    video.volume = 1;
+    setMuted(video.muted);
+    if (video.paused) {
+      video.play().catch(() => {});
+      setPaused(false);
+    }
+  }
+
   function closeWidget() {
     videoRef.current?.pause();
     sessionStorage.setItem("bl-video-closed", "1");
@@ -176,12 +197,20 @@ function FloatingVideo() {
         ref={videoRef}
         autoPlay
         loop
-        muted
         playsInline
-        preload="metadata"
+        preload="auto"
         src="/body-laser-widget.mp4"
+        onClick={toggleSound}
       />
       <div className="video-widget-controls">
+        <button
+          aria-label={muted ? "Activer le son" : "Couper le son"}
+          className={muted ? "sound-off" : undefined}
+          onClick={toggleSound}
+          type="button"
+        >
+          {muted ? "Son" : "Muet"}
+        </button>
         <button
           aria-label={paused ? "Lire la video" : "Mettre la video en pause"}
           onClick={togglePause}
@@ -523,24 +552,23 @@ export default function Home() {
           protocole repose sur un laser medical Alexandrite + Nd:YAG, adapte a
           tous types de peau.
         </p>
-        <table className="comparison-table">
-          <thead>
-            <tr>
-              <th>Critere</th>
-              <th>Laser diode standard</th>
-              <th>Alexandrite + Nd:YAG</th>
-            </tr>
-          </thead>
-          <tbody>
-            {comparisonRows.map(([label, diode, medical]) => (
-              <tr key={label}>
-                <td>{label}</td>
-                <td className="lose">{diode}</td>
-                <td className="win">{medical}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className="comparison-cards">
+          {comparisonRows.map(([label, diode, medical]) => (
+            <article className="comparison-card" key={label}>
+              <h3>{label}</h3>
+              <div className="comparison-split">
+                <div>
+                  <span>Laser diode</span>
+                  <strong className="lose">{diode}</strong>
+                </div>
+                <div>
+                  <span>Alexandrite + Nd:YAG</span>
+                  <strong className="win">{medical}</strong>
+                </div>
+              </div>
+            </article>
+          ))}
+        </div>
       </section>
 
       <section className="proof-section" aria-labelledby="proof-title">
