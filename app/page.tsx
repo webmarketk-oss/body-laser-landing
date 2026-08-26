@@ -10,7 +10,8 @@ declare global {
 }
 
 const LEAD_WEBHOOK_URL = process.env.NEXT_PUBLIC_LEAD_WEBHOOK_URL;
-const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const META_PIXEL_ID =
+  process.env.NEXT_PUBLIC_META_PIXEL_ID || "3831159753859385";
 const CENTER_NAME = process.env.NEXT_PUBLIC_CENTER_NAME || "Body Laser";
 
 const zones = [

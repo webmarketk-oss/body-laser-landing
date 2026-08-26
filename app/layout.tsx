@@ -32,6 +32,15 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <noscript>
+          <img
+            alt=""
+            height={1}
+            src="https://www.facebook.com/tr?id=3831159753859385&ev=PageView&noscript=1"
+            style={{ display: "none" }}
+            width={1}
+          />
+        </noscript>
         {children}
       </body>
     </html>

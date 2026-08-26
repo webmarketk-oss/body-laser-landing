@@ -11,7 +11,7 @@ Tunnel :
 
 Variables Vercel optionnelles :
 
-- `NEXT_PUBLIC_META_PIXEL_ID`
+- `NEXT_PUBLIC_META_PIXEL_ID` (pixel Body Laser : `3831159753859385`)
 - `NEXT_PUBLIC_LEAD_WEBHOOK_URL`
 - `NEXT_PUBLIC_CENTER_NAME`
 
