@@ -332,6 +332,30 @@ export default function Home() {
           body: JSON.stringify(payload),
         });
       }
+
+      const nameParts = payload.full_name.trim().split(/\s+/).filter(Boolean);
+      const prenom = nameParts[0] ?? "";
+      const nom = nameParts.slice(1).join(" ");
+      try {
+        await fetch(
+          "https://www.bookeai.fr/api/leads?center=body-laser-cambrai&source=landing",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              first_name: prenom,
+              last_name: nom,
+              email: payload.email,
+              phone: payload.phone,
+              offre: "Consultation laser offerte Body Laser Cambrai",
+              commentaire: `Zones à traiter : ${selectedZones.join(", ") || "non précisé"}`,
+            }),
+          },
+        );
+      } catch {
+        // Bookea ne doit pas bloquer la demande Cambrai.
+      }
+
       track("Lead", {
         content_name: "Consultation laser offerte",
         center: CENTER_NAME,
@@ -459,6 +483,9 @@ export default function Home() {
           <h2 id="form-title">
             Remplissez vos coordonnees pour valider votre consultation offerte.
           </h2>
+          <p className="helper-text">
+            Zone(s) à traiter : {selectedZones.join(", ")}
+          </p>
 
           <form className="lead-form" onSubmit={submitLead}>
             <label>
